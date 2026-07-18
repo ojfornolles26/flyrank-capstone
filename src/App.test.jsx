@@ -132,7 +132,7 @@ describe('App - Profile & Settings Form (Round 2)', () => {
     
     fireEvent.click(screen.getByRole('button', { name: /Save Settings/i }));
 
-    expect(await screen.findByText(/Settings saved successfully!/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Settings saved successfully/i)).toBeInTheDocument();
   });
 
   it('submits successfully with valid inputs and valid keys provided', async () => {
@@ -145,7 +145,7 @@ describe('App - Profile & Settings Form (Round 2)', () => {
     
     fireEvent.click(screen.getByRole('button', { name: /Save Settings/i }));
 
-    expect(await screen.findByText(/Settings saved successfully!/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Settings saved successfully/i)).toBeInTheDocument();
   });
 
   it('contains appropriate accessibility attributes for error states', async () => {

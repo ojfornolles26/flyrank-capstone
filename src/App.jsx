@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Eye, EyeOff, User, Mail, Key, Sliders, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 
 const settingsSchema = z.object({
   name: z.string().min(2, { message: "Full Name must be at least 2 characters" }),
@@ -78,42 +78,43 @@ export default function App() {
   });
 
   const onSubmit = async (data) => {
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 5000);
+    setTimeout(() => setIsSaved(false), 4000);
   };
 
+  const inputBaseClass = "w-full p-2.5 rounded bg-slate-900 border text-slate-100 text-sm focus:outline-none transition-colors";
+  const labelClass = "text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5";
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4 md:p-8">
-      <main className="w-full max-w-2xl bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl shadow-2xl p-6 md:p-8">
-        <header className="mb-8">
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
+      <main className="w-full max-w-xl bg-slate-900/40 border border-slate-800 rounded-lg p-6 md:p-8">
+        <header className="mb-6">
+          <h1 className="text-xl font-medium text-slate-100">
             AI Developer Profile & Settings
           </h1>
-          <p className="text-slate-400 text-sm mt-2">
-            Configure your environment, model parameters, and provider API keys securely.
+          <p className="text-slate-400 text-xs mt-1">
+            Configure your environment, model parameters, and provider API keys.
           </p>
         </header>
 
         {isSaved && (
-          <div className="mb-6 p-4 bg-emerald-950/80 border border-emerald-800 text-emerald-200 rounded-xl flex items-center gap-3 animate-fadeIn">
-            <CheckCircle2 className="text-emerald-400 h-5 w-5 flex-shrink-0" />
-            <span className="text-sm font-medium">Settings saved successfully!</span>
+          <div className="mb-6 p-3 bg-slate-800/80 border border-slate-700 text-slate-200 rounded flex items-center gap-2.5 text-xs animate-fadeIn">
+            <CheckCircle2 className="text-emerald-500 h-4 w-4 flex-shrink-0" />
+            <span>Settings saved successfully.</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
           {/* Section 1: Developer Profile */}
           <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
-              <User className="h-5 w-5 text-indigo-400" />
-              <h2 className="text-lg font-semibold text-slate-200">Developer Profile</h2>
+            <div className="border-b border-slate-800 pb-1.5">
+              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Developer Profile</h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="flex flex-col">
-                <label htmlFor="name" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="name" className={labelClass}>
                   Full Name
                 </label>
                 <input
@@ -122,8 +123,8 @@ export default function App() {
                   {...register('name')}
                   aria-invalid={errors.name ? 'true' : 'false'}
                   aria-describedby={errors.name ? 'name-error' : undefined}
-                  className={`p-2.5 rounded-lg bg-slate-950 border text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all ${
-                    errors.name ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'
+                  className={`${inputBaseClass} ${
+                    errors.name ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                   }`}
                   placeholder="e.g. John Doe"
                 />
@@ -135,7 +136,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="email" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="email" className={labelClass}>
                   Email Address
                 </label>
                 <input
@@ -144,8 +145,8 @@ export default function App() {
                   {...register('email')}
                   aria-invalid={errors.email ? 'true' : 'false'}
                   aria-describedby={errors.email ? 'email-error' : undefined}
-                  className={`p-2.5 rounded-lg bg-slate-950 border text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all ${
-                    errors.email ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'
+                  className={`${inputBaseClass} ${
+                    errors.email ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                   }`}
                   placeholder="e.g. john@example.com"
                 />
@@ -160,14 +161,13 @@ export default function App() {
 
           {/* Section 2: API Keys */}
           <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
-              <Key className="h-5 w-5 text-indigo-400" />
-              <h2 className="text-lg font-semibold text-slate-200">API Provider Credentials</h2>
+            <div className="border-b border-slate-800 pb-1.5">
+              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">API Provider Credentials</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="flex flex-col">
-                <label htmlFor="openaiKey" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="openaiKey" className={labelClass}>
                   OpenAI API Key
                 </label>
                 <div className="relative">
@@ -177,18 +177,18 @@ export default function App() {
                     {...register('openaiKey')}
                     aria-invalid={errors.openaiKey ? 'true' : 'false'}
                     aria-describedby={errors.openaiKey ? 'openaiKey-error' : undefined}
-                    className={`w-full p-2.5 pr-10 rounded-lg bg-slate-950 border text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all ${
-                      errors.openaiKey ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'
+                    className={`${inputBaseClass} pr-10 ${
+                      errors.openaiKey ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                     }`}
                     placeholder="sk-..."
                   />
                   <button
                     type="button"
                     onClick={() => setShowOpenaiKey(!showOpenaiKey)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-350 focus:outline-none"
                     aria-label={showOpenaiKey ? 'Hide key' : 'Show key'}
                   >
-                    {showOpenaiKey ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    {showOpenaiKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
                 {errors.openaiKey && (
@@ -199,7 +199,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="anthropicKey" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="anthropicKey" className={labelClass}>
                   Anthropic API Key
                 </label>
                 <div className="relative">
@@ -209,18 +209,18 @@ export default function App() {
                     {...register('anthropicKey')}
                     aria-invalid={errors.anthropicKey ? 'true' : 'false'}
                     aria-describedby={errors.anthropicKey ? 'anthropicKey-error' : undefined}
-                    className={`w-full p-2.5 pr-10 rounded-lg bg-slate-950 border text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all ${
-                      errors.anthropicKey ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'
+                    className={`${inputBaseClass} pr-10 ${
+                      errors.anthropicKey ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                     }`}
                     placeholder="sk-ant-..."
                   />
                   <button
                     type="button"
                     onClick={() => setShowAnthropicKey(!showAnthropicKey)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-350 focus:outline-none"
                     aria-label={showAnthropicKey ? 'Hide key' : 'Show key'}
                   >
-                    {showAnthropicKey ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    {showAnthropicKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
                 {errors.anthropicKey && (
@@ -234,20 +234,19 @@ export default function App() {
 
           {/* Section 3: Model Parameters */}
           <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
-              <Sliders className="h-5 w-5 text-indigo-400" />
-              <h2 className="text-lg font-semibold text-slate-200">Model Preferences</h2>
+            <div className="border-b border-slate-800 pb-1.5">
+              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Model Preferences</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="flex flex-col">
-                <label htmlFor="defaultModel" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="defaultModel" className={labelClass}>
                   Default Model
                 </label>
                 <select
                   id="defaultModel"
                   {...register('defaultModel')}
-                  className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                  className="w-full p-2.5 rounded bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-slate-600 transition-colors"
                 >
                   <option value="gemini-2-flash">Gemini 2 Flash</option>
                   <option value="gemini-1-5-pro">Gemini 1.5 Pro</option>
@@ -257,7 +256,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="temperature" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="temperature" className={labelClass}>
                   Temperature
                 </label>
                 <input
@@ -267,8 +266,8 @@ export default function App() {
                   {...register('temperature')}
                   aria-invalid={errors.temperature ? 'true' : 'false'}
                   aria-describedby={errors.temperature ? 'temperature-error' : undefined}
-                  className={`p-2.5 rounded-lg bg-slate-950 border text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all ${
-                    errors.temperature ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'
+                  className={`${inputBaseClass} ${
+                    errors.temperature ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                   }`}
                   placeholder="0.7"
                 />
@@ -280,7 +279,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="maxTokens" className="text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="maxTokens" className={labelClass}>
                   Max Tokens
                 </label>
                 <input
@@ -289,8 +288,8 @@ export default function App() {
                   {...register('maxTokens')}
                   aria-invalid={errors.maxTokens ? 'true' : 'false'}
                   aria-describedby={errors.maxTokens ? 'maxTokens-error' : undefined}
-                  className={`p-2.5 rounded-lg bg-slate-950 border text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all ${
-                    errors.maxTokens ? 'border-red-500' : 'border-slate-800 focus:border-indigo-500'
+                  className={`${inputBaseClass} ${
+                    errors.maxTokens ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                   }`}
                   placeholder="2048"
                 />
@@ -307,7 +306,7 @@ export default function App() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-white rounded-xl font-semibold shadow-lg shadow-indigo-950/50 hover:shadow-indigo-900/50 active:scale-[0.98] transition-all"
+            className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 rounded text-sm font-semibold transition-colors mt-4"
           >
             {isSubmitting ? 'Saving Settings...' : 'Save Settings'}
           </button>
