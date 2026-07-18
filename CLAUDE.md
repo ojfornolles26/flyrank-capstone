@@ -39,3 +39,17 @@ This project uses **npm** as its primary package manager.
 - Prefer ES6+ syntax (arrow functions, template literals, destructuring).
 - Ensure explicit variable declarations; avoid any unused variables.
 - Write explanatory comments for complex business logic, but prioritize self-documenting code.
+
+## Strict Project Rules
+
+### 1. Form Validation Stack
+- **Rule**: All forms must utilize `react-hook-form` coupled with `zod` for validation schemas. Custom local state validations or uncontrolled inputs are strictly prohibited.
+- **Rule**: All form elements must have the `noValidate` attribute to bypass browser-native validation and prevent test suite interference in JSDOM.
+
+### 2. Accessibility (a11y) & Input Structure
+- **Rule**: Every `<input>` or `<select>` element must have a corresponding `<label>` linked via matching `id` and `htmlFor`. 
+- **Rule**: Forms must implement screen-reader error propagation: inputs with validation errors must toggle `aria-invalid="true"` and define `aria-describedby` linking to the exact `id` of the error message container.
+
+### 3. Masked Field UI & Testing Isolation
+- **Rule**: Visibility toggles for password/API Key inputs must use generic labels (e.g. `aria-label="Show key"` or `aria-label="Hide key"`). Do not include the full field name in the button's label to prevent conflicts with `getByLabelText` queries in tests.
+
