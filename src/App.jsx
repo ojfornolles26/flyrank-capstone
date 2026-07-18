@@ -126,7 +126,7 @@ export default function App() {
                   className={`${inputBaseClass} ${
                     errors.name ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                   }`}
-                  placeholder="e.g. John Doe"
+                  placeholder="e.g. Orlando Fornolles"
                 />
                 {errors.name && (
                   <span id="name-error" className="text-red-400 text-xs mt-1 block">
@@ -148,7 +148,7 @@ export default function App() {
                   className={`${inputBaseClass} ${
                     errors.email ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-slate-600'
                   }`}
-                  placeholder="e.g. john@example.com"
+                  placeholder="e.g. ojfornolles26@gmail.com"
                 />
                 {errors.email && (
                   <span id="email-error" className="text-red-400 text-xs mt-1 block">
